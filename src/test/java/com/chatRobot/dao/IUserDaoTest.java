@@ -26,6 +26,6 @@ public class IUserDaoTest {
     public void testSelectUser(){
         int userid = 1;
         User user = dao.selectUser(userid);
-        System.out.println(user.getUsername());
+        System.out.println(user);
     }
 }

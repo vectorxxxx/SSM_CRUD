@@ -16,6 +16,17 @@ public class User {
     private int phone;
     private String email;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid=" + userid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", phone=" + phone +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     public int getUserid() {
         return userid;
     }
