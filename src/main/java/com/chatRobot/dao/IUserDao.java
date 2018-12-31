@@ -10,5 +10,5 @@ import com.chatRobot.model.User;
  * @since Java10
  */
 public interface IUserDao {
-    User selectUser(long id);
+    User selectUser(int id);
 }

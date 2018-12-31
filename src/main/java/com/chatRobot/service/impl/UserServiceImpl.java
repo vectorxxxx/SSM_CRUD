@@ -20,7 +20,7 @@ public class UserServiceImpl implements IUserService {
     @Resource
     private IUserDao userDao;
 
-    public User selectUser(long userId) {
+    public User selectUser(int userId) {
         return this.userDao.selectUser(userId);
     }
 
