@@ -24,8 +24,8 @@ public class IUserDaoTest {
 
     @Test
     public void testSelectUser(){
-        long id = 1;
-        User user = dao.selectUser(id);
+        long userid = 1;
+        User user = dao.selectUser(userid);
         System.out.println(user.getUsername());
     }
 }
