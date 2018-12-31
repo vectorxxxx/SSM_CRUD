@@ -30,7 +30,7 @@ public class UserController {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        long userId = Long.parseLong(request.getParameter("userid"));
+        int userId = Integer.parseInt(request.getParameter("userid"));
         User user = this.userService.selectUser(userId);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(user));
