@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chatRobot.dao.IUserDao">
-    <select id="selectUser" resultType="User" parameterType="int">
+    <select id="selectUser" resultType="User" parameterType="Integer">
         SELECT * FROM user WHERE userid = #{userid}
     </select>
 </mapper>
