@@ -9,6 +9,10 @@
     <display-name>Archetype Created Web Application</display-name>
     <description>ChatRobot_Alpha_0.0.1</description>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring-*.xml</param-value>
+    </context-param>
     <!-- 编码过滤器 -->
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -45,7 +49,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring-*.xml</param-value>
+            <param-value>classpath:spring-mvc.xml</param-value>
         </init-param>
         <!-- 配置springMVC需要加载的配置文件-->
         <load-on-startup>1</load-on-startup>
