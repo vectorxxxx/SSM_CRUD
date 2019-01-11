@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>test</title>
-    <link href="${pageContext.request.contextPath}/WEB-INF/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="WEB-INF/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
