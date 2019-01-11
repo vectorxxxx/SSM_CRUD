@@ -18,6 +18,6 @@
 </script>
 <body>
 <p id="test">Hello World!</p>
-<button type="button" onclick="selectUser()">onclick test</button>
+<button type="button" class="btn btn-success" onclick="selectUser()">onclick test</button>
 </body>
 </html>
