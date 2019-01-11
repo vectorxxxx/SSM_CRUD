@@ -18,9 +18,6 @@
 
     <!-- 静态资源默认配置 -->
     <mvc:default-servlet-handler/>
-    <mvc:resources location="/WEB-INF/static/bootstrap-3.3.7-dist/css/" mapping="/css/**"/>
-    <mvc:resources location="/WEB-INF/static/bootstrap-3.3.7-dist/js/" mapping="/js/**"/>
-    <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
 
     <!-- 视图解析器配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
