@@ -13,18 +13,18 @@
     <!-- 扫描web相关的bean -->
     <context:component-scan base-package="com.chatRobot.controller"/>
 
-    <!-- 开启SpringMVC注解模式 -->
-    <mvc:annotation-driven/>
-
-    <!-- 静态资源默认配置 -->
-    <mvc:default-servlet-handler/>
-
     <!-- 视图解析器配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <!--两个标准配置-->
+    <!-- 静态资源默认配置 -->
+    <mvc:default-servlet-handler/>
+    <!-- 开启SpringMVC注解模式，支持JSR303、AJAX等 -->
+    <mvc:annotation-driven/>
 
     <!--上传文件配置-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
