@@ -1,4 +1,4 @@
-package xyz.funnyboy.crud.dao;
+package xyz.funnyboy.crud.test;
 
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;

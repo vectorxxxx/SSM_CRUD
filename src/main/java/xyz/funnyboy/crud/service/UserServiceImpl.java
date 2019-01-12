@@ -1,8 +1,5 @@
-package xyz.funnyboy.crud.service.impl;
+package xyz.funnyboy.crud.service;
 
-import xyz.funnyboy.crud.dao.IUserDao;
-import xyz.funnyboy.crud.model.User;
-import xyz.funnyboy.crud.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

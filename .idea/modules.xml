@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SSM_CRUD.iml" filepath="$PROJECT_DIR$/SSM_CRUD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ChatRobot.iml" filepath="$PROJECT_DIR$/ChatRobot.iml" />
     </modules>
   </component>
 </project>
