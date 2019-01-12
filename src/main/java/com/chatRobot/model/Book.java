@@ -16,10 +16,10 @@ public class Book {
     private String introduction;
     private String category;
     private String publisher;
-    private Date publishdate;
-    private String wordcount;
-    private int salesamount;
-    private int storenumber;
+    private Date publishDate;
+    private String wordCount;
+    private int salesAmount;
+    private int storeNumber;
     private double price;
 
     public int getBookid() {
@@ -70,36 +70,36 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public Date getPublishdate() {
-        return publishdate;
+    public Date getPublishDate() {
+        return publishDate;
     }
 
-    public void setPublishdate(Date publishdate) {
-        this.publishdate = publishdate;
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
     }
 
-    public String getWordcount() {
-        return wordcount;
+    public String getWordCount() {
+        return wordCount;
     }
 
-    public void setWordcount(String wordcount) {
-        this.wordcount = wordcount;
+    public void setWordCount(String wordCount) {
+        this.wordCount = wordCount;
     }
 
-    public int getSalesamount() {
-        return salesamount;
+    public int getSalesAmount() {
+        return salesAmount;
     }
 
-    public void setSalesamount(int salesamount) {
-        this.salesamount = salesamount;
+    public void setSalesAmount(int salesAmount) {
+        this.salesAmount = salesAmount;
     }
 
-    public int getStorenumber() {
-        return storenumber;
+    public int getStoreNumber() {
+        return storeNumber;
     }
 
-    public void setStorenumber(int storenumber) {
-        this.storenumber = storenumber;
+    public void setStoreNumber(int storeNumber) {
+        this.storeNumber = storeNumber;
     }
 
     public double getPrice() {
