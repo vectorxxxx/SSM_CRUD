@@ -1,6 +1,6 @@
-package com.chatRobot.service;
+package xyz.funnyboy.crud.service;
 
-import com.chatRobot.model.User;
+import xyz.funnyboy.crud.model.User;
 
 /**
  * @author Uxiahnan OR 14027

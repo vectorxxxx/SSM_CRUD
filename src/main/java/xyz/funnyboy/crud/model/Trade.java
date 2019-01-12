@@ -1,4 +1,4 @@
-package com.chatRobot.model;
+package xyz.funnyboy.crud.model;
 
 import java.util.Date;
 

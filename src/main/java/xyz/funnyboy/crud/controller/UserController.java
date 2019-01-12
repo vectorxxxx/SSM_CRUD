@@ -1,7 +1,7 @@
-package com.chatRobot.controller;
+package xyz.funnyboy.crud.controller;
 
-import com.chatRobot.model.User;
-import com.chatRobot.service.IUserService;
+import xyz.funnyboy.crud.model.User;
+import xyz.funnyboy.crud.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

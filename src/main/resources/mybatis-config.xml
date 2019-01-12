@@ -7,6 +7,6 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-        <package name="com.chatRobot.dao"/>
+        <package name="xyz.funnyboy.crud.dao"/>
     </typeAliases>
 </configuration>

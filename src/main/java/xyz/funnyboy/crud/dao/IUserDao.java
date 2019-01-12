@@ -1,6 +1,6 @@
-package com.chatRobot.dao;
+package xyz.funnyboy.crud.dao;
 
-import com.chatRobot.model.User;
+import xyz.funnyboy.crud.model.User;
 
 /**
  * @author Uxiahnan OR 14027

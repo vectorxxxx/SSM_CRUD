@@ -1,8 +1,8 @@
-package com.chatRobot.service.impl;
+package xyz.funnyboy.crud.service.impl;
 
-import com.chatRobot.dao.IUserDao;
-import com.chatRobot.model.User;
-import com.chatRobot.service.IUserService;
+import xyz.funnyboy.crud.dao.IUserDao;
+import xyz.funnyboy.crud.model.User;
+import xyz.funnyboy.crud.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

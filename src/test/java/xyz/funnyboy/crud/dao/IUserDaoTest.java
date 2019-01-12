@@ -1,6 +1,6 @@
-package com.chatRobot.dao;
+package xyz.funnyboy.crud.dao;
 
-import com.chatRobot.model.User;
+import xyz.funnyboy.crud.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
