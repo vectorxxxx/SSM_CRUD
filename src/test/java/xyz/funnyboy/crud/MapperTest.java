@@ -15,10 +15,10 @@ import xyz.funnyboy.crud.dao.DepartmentMapper;
  * @since Java10
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-*.xml"})
+@ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
 public class MapperTest {
     @Autowired
-    DepartmentMapper departmentMapper;
+    private DepartmentMapper departmentMapper;
     @Test
     public void testCRUD(){
         System.out.println(departmentMapper);

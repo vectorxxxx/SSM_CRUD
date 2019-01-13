@@ -11,9 +11,7 @@
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 扫描service包下所有使用注解的类型 -->
-    <context:component-scan base-package="xyz.funnyboy.crud">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+    <context:component-scan base-package="xyz.funnyboy.crud.service"/>
 
     <!-- 配置数据库相关参数properties的属性：${url} -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
