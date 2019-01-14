@@ -5,12 +5,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xyz.funnyboy.crud.dao.DepartmentMapper;
 import xyz.funnyboy.crud.dao.EmployeeMapper;
 import xyz.funnyboy.crud.model.Department;
 import xyz.funnyboy.crud.model.Employee;
+
+import java.util.UUID;
 
 /**
  * @author Uxiahnan OR 14027
@@ -26,16 +29,37 @@ public class MapperTest {
     private DepartmentMapper departmentMapper;
     @Autowired
     EmployeeMapper employeeMapper;
+
+    @Autowired
+    SqlSession sqlSession;
+
     @Test
-    public void testCRUD(){
+    public void testCRUD() {
 //        System.out.println(departmentMapper);
 //        departmentMapper.insertSelective(new Department(null, "研发部"));
 //        departmentMapper.insertSelective(new Department(null, "技术部"));
 
 //        employeeMapper.insertSelective(new Employee(null, "刘备", "男", "liubei@qq.com", 1));
 
-        for(int i=0;i<1000;i++) {
-            
+        EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+        for (int i = 0; i < 1000; i++) {
+            String uid = UUID.randomUUID().toString().substring(0, 5) + i;
+            employeeMapper.insertSelective(new Employee(null, uid, "男", uid + "@funnyboy.xyz", 1));
         }
     }
+    @Test
+    public void testDelete(){
+        employeeMapper.deleteByPrimaryKey(1001);
+    }
+    @Test
+    public void testUpdate(){
+        employeeMapper.updateByPrimaryKey(new Employee(1,"刘备","男","liubei@funnyboy.xyz",1));
+    }
+
+    @Test
+    public void testSelect() {
+        Employee employee = employeeMapper.selectByPrimaryKeyWithDept(1);
+        System.err.println(employee.getDepartment().getDeptName());
+    }
+
 }

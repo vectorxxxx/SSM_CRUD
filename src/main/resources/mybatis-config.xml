@@ -9,4 +9,7 @@
     <typeAliases>
         <package name="xyz.funnyboy.crud.dao"/>
     </typeAliases>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
 </configuration>
