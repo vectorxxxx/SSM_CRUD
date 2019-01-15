@@ -26,7 +26,7 @@ import xyz.funnyboy.crud.model.Employee;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:spring-*.xml"})
-public class EmployeeControllderTest {
+public class EmployeeControllerTest {
     @Autowired
     WebApplicationContext context;
     MockMvc mockMvc;
@@ -38,7 +38,7 @@ public class EmployeeControllderTest {
 
     @Test
     public void testGet() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("http:118.25.181.243:8080/ChatRobot/emps").param("pg", "5")).andReturn();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("pg", "1")).andReturn();
         MockHttpServletRequest request = result.getRequest();
         PageInfo pageInfo = (PageInfo) request.getAttribute("pageInfo");
         System.err.println("当前页：" + pageInfo.getPageNum());
