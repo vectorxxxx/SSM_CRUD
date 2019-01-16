@@ -67,36 +67,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <p>Current page: ${pageInfo.pageNum}, All pages: ${pageInfo.pages}, All records: ${pageInfo.total}</p>
-        </div>
+        <div class="col-md-6" id="page_info_area"></div>
         <div class="col-md-6">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li><a href="${APP_PATH}/emps?pg=1">First</a></li>
-                    <c:if test="${pageInfo.hasPreviousPage}">
-                        <li>
-                            <a href="${APP_PATH}/emps?pg=${pageInfo.pageNum-1}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                    </c:if>
-                    <c:forEach items="${pageInfo.navigatepageNums}" var="navNum">
-                        <c:if test="${navNum == pageInfo.pageNum}">
-                            <li class="active"><a href="#">${navNum}</a></li>
-                        </c:if>
-                        <c:if test="${navNum != pageInfo.pageNum}">
-                            <li><a href="${APP_PATH}/emps?pg=${navNum}">${navNum}</a></li>
-                        </c:if>
-                    </c:forEach>
-                    <c:if test="${pageInfo.hasNextPage}">
-                        <li>
-                            <a href="${APP_PATH}/emps?pg=${pageInfo.pageNum+1}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </c:if>
-                    <li><a href="${APP_PATH}/emps?pg=${pageInfo.pages}">Last</a></li>
+
                 </ul>
             </nav>
         </div>
@@ -110,7 +85,8 @@
             type: "GET",
             success: function (result) {
                 build_emps_table(result);
-                // build_page_nav(result);
+                build_page_info(result);
+                build_page_nav(result);
             }
         });
     });
@@ -148,7 +124,36 @@
         });
     }
 
+    function build_page_info(result) {
+        var pageInfo = result.extend.pageInfo;
+        $("<p></p>").append("Current page:" + pageInfo.pageNum + ", All pages: " + pageInfo.pages + ", All records: " + pageInfo.total)
+            .appendTo("#page_info_area");
+    }
     function build_page_nav(result) {
+        <%--<li><a href="${APP_PATH}/emps?pg=1">First</a></li>--%>
+        <%--<c:if test="${pageInfo.hasPreviousPage}">--%>
+        <%--<li>--%>
+        <%--<a href="${APP_PATH}/emps?pg=${pageInfo.pageNum-1}" aria-label="Previous">--%>
+            <%--<span aria-hidden="true">&laquo;</span>--%>
+        <%--</a>--%>
+        <%--</li>--%>
+        <%--</c:if>--%>
+        <%--<c:forEach items="${pageInfo.navigatepageNums}" var="navNum">--%>
+        <%--<c:if test="${navNum == pageInfo.pageNum}">--%>
+        <%--<li class="active"><a href="#">${navNum}</a></li>--%>
+        <%--</c:if>--%>
+        <%--<c:if test="${navNum != pageInfo.pageNum}">--%>
+        <%--<li><a href="${APP_PATH}/emps?pg=${navNum}">${navNum}</a></li>--%>
+        <%--</c:if>--%>
+        <%--</c:forEach>--%>
+        <%--<c:if test="${pageInfo.hasNextPage}">--%>
+        <%--<li>--%>
+        <%--<a href="${APP_PATH}/emps?pg=${pageInfo.pageNum+1}" aria-label="Next">--%>
+            <%--<span aria-hidden="true">&raquo;</span>--%>
+        <%--</a>--%>
+        <%--</li>--%>
+        <%--</c:if>--%>
+        <%--<li><a href="${APP_PATH}/emps?pg=${pageInfo.pages}">Last</a></li>--%>
 
     }
 </script>
