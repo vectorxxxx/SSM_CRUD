@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <% pageContext.setAttribute("APP_PATH", request.getContextPath());%></>
 <html>
 <head>
@@ -30,6 +31,57 @@
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
+<!-- Modal -->
+<div class="modal fade" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Add New Employee</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="emp_name_input" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="email" name="empName" class="form-control" id="emp_name_input"
+                                   placeholder="张三">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp_email_input" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="password" name="email" class="form-control" id="emp_email_input"
+                                   placeholder="zhangsan@funnyboy.xyz">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Gender</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="male_radio" value="male" checked> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="female_radio" value="female"> 女
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Department</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="deptId"> </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -38,8 +90,8 @@
     </div>
     <div class="row">
         <div class="col-md-4 col-md-offset-8">
-            <button class="btn btn-primary">New</button>
-            <button class="btn btn-danger">Delete</button>
+            <button class="btn btn-primary" id="emp_add_btn">New</button>
+            <button class="btn btn-danger" id="emp_del_btn">Delete</button>
         </div>
     </div>
     <div class="row">
@@ -130,7 +182,7 @@
         if (pageInfo.hasPreviousPage == false) {
             $firstLi.addClass("disabled");
             $previousLi.addClass("disabled");
-        }else{
+        } else {
             $firstLi.click(function () {
                 to_page(1);
             });
@@ -141,7 +193,7 @@
         if (pageInfo.hasNextPage == false) {
             $nextLi.addClass("disabled");
             $lastLi.addClass("disabled");
-        }else{
+        } else {
             $nextLi.click(function () {
                 to_page(pageInfo.nextPage);
             });
@@ -155,7 +207,7 @@
             var $numLi = $("<li></li>").append($("<a></a>").append(item));
             if (item == pageInfo.pageNum) {
                 $numLi.addClass("active");
-            }else {
+            } else {
                 $numLi.click(function () {
                     to_page(item);
                 });
@@ -166,6 +218,12 @@
         $ul.append($lastLi);
         $nav.appendTo("#page_nav_area");
     }
+
+    $("#emp_add_btn").click(function () {
+        $("#empAddModal").modal({
+            backdrop: "static"
+        });
+    });
 </script>
 </body>
 </html>
