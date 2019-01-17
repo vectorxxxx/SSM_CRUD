@@ -47,6 +47,7 @@
                         <div class="col-sm-10">
                             <input type="email" name="empName" class="form-control" id="emp_name_input"
                                    placeholder="张三">
+                            <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -54,6 +55,7 @@
                         <div class="col-sm-10">
                             <input type="password" name="email" class="form-control" id="emp_email_input"
                                    placeholder="zhangsan@funnyboy.xyz">
+                            <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -118,6 +120,9 @@
 </div>
 <script>
     var totalRecord;
+    var success = "success";
+    var error = "error";
+
     $(function () {
         to_page(1);
     });
@@ -222,6 +227,8 @@
     }
 
     $("#emp_add_btn").click(function () {
+        $("#empAddModal form")[0].reset();
+        $("#emp_save_btn").removeAttr("status");
         getDepts();
         $("#empAddModal").modal({
             backdrop: "static"
@@ -230,27 +237,108 @@
 
     function getDepts() {
         $.ajax({
-            url:"${APP_PATH}/depts",
-            type:"GET",
-            success:function (result) {
-                $.each(result.extend.depts,function () {
-                    var $option = $("<option></option>").attr("value",this.deptId).append(this.deptName);
+            url: "${APP_PATH}/depts",
+            type: "GET",
+            success: function (result) {
+                $.each(result.extend.depts, function () {
+                    var $option = $("<option></option>").attr("value", this.deptId).append(this.deptName);
                     $("#empAddModal select").append($option);
                 });
             }
         });
     }
 
+    $("#emp_name_input").change(function () {
+        var $emp_name_input = $("#emp_name_input");
+        var empName = $emp_name_input.val();
+        var regName = /(^[a-z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5}$)/;
+        if (empName == "") {
+            show_validate($emp_name_input, error, "员工名不能为空");
+            $("#emp_save_btn").attr("status1", "error");
+        } else if (!regName.test(empName)) {
+            show_validate($emp_name_input, error, "员工格式不正确");
+            $("#emp_save_btn").attr("status1", "error");
+        } else {
+            $.ajax({
+                url: "${APP_PATH}/validateuser",
+                type: "POST",
+                data: "empName=" + empName,
+                success: function (result) {
+                    if (result.code == 200) {
+                        show_validate($emp_name_input, error, "员工名已存在");
+                        $("#emp_save_btn").attr("status1", "error");
+                    } else if (result.code == 100) {
+                        show_validate($emp_name_input, success, "");
+                        $("#emp_save_btn").removeAttr("status1");
+                    }
+                }
+            });
+        }
+
+    });
+    $("#emp_email_input").change(function () {
+        var $emp_email_input = $("#emp_email_input");
+        var email = $emp_email_input.val();
+        var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+        if (email == "") {
+            show_validate($emp_email_input, error, "邮箱不能为空");
+            $("#emp_save_btn").attr("status2", "error");
+        } else if (!regEmail.test(email)) {
+            show_validate($emp_email_input, error, "邮箱格式不正确");
+            $("#emp_save_btn").attr("status2", "error");
+        } else {
+            show_validate($emp_email_input, success, "");
+            $("#emp_save_btn").removeAttr("status2");
+        }
+    });
+
     $("#emp_save_btn").click(function () {
+        if (!validate_add_form()) {
+            return false;
+        }
+        if ($(this).attr("status1")=="error"||$(this).attr("status2")=="error") {
+            return false;
+        }
         saveEmp();
     });
 
+    function validate_add_form() {
+        var $emp_name_input = $("#emp_name_input");
+        var empName = $emp_name_input.val();
+        var $emp_email_input = $("#emp_email_input");
+        var email = $emp_email_input.val();
+        if (empName == "") {
+            show_validate($emp_name_input, error, "员工名不能为空");
+            return false;
+        } else if (email == "") {
+            show_validate($emp_email_input, error, "邮箱不能为空");
+            return false;
+        }
+        return true;
+    }
+
+    function show_validate(ele, status, msg) {
+        emptyInfo(ele);
+        if (error == status) {
+            $(ele).parent().addClass("has-error");
+            $(ele).next("span").append(msg);
+        } else if (success == status) {
+            $(ele).parent().addClass("has-success");
+            $(ele).next("span").append(msg);
+        }
+    }
+
+    function emptyInfo(ele) {
+        $(ele).parent().removeClass("has-error has-success");
+        $(ele).next("span").empty();
+    }
+
     function saveEmp() {
         $.ajax({
-            url:"${APP_PATH}/emps",
-            type:"POST",
-            data:$(".form-horizontal").serialize(),
-            success:function (result) {
+            url: "${APP_PATH}/emps",
+            type: "POST",
+            data: $(".form-horizontal").serialize(),
+            success: function (result) {
                 $("#empAddModal").modal("hide");
                 to_page(totalRecord);
             }

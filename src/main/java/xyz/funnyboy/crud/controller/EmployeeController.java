@@ -28,18 +28,30 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "/emps",method = RequestMethod.POST)
+    @RequestMapping(value = "/validateuser", method = RequestMethod.POST)
     @ResponseBody
-    public Msg saveEmp(Employee employee){
-        int success = employeeService.insertEmp(employee);
-        return Msg.success().add("success",success);
+    public Msg validateUser(@RequestParam("empName") String empName) {
+        boolean success = employeeService.validateUserUsable(empName);
+        if (success) {
+            return Msg.success();
+        } else {
+            return Msg.failed();
+        }
     }
-    @RequestMapping(value = "/emps",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/emps", method = RequestMethod.POST)
+    @ResponseBody
+    public Msg saveEmp(Employee employee) {
+        employeeService.insertEmp(employee);
+        return Msg.success();
+    }
+
+    @RequestMapping(value = "/emps", method = RequestMethod.GET)
     @ResponseBody
     public Msg getEmpsWithJson(@RequestParam(value = "pg", defaultValue = "1") Integer pg) {
         PageHelper.startPage(pg, 5);
         List<Employee> employees = employeeService.getAll();
         PageInfo pageInfo = new PageInfo(employees, 5);
-        return Msg.success().add("pageInfo",pageInfo);
+        return Msg.success().add("pageInfo", pageInfo);
     }
 }

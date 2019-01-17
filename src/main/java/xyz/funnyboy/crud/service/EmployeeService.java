@@ -16,4 +16,6 @@ public interface EmployeeService {
     List getAll();
 
     int insertEmp(Employee employee);
+
+    boolean validateUserUsable(String empName);
 }

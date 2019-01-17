@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import xyz.funnyboy.crud.dao.EmployeeMapper;
 import xyz.funnyboy.crud.model.Employee;
+import xyz.funnyboy.crud.model.EmployeeExample;
 import xyz.funnyboy.crud.service.EmployeeService;
 
 import java.util.List;
@@ -26,5 +27,12 @@ public class IEmployeeService implements EmployeeService {
 
     public int insertEmp(Employee employee) {
         return employeeMapper.insertSelective(employee);
+    }
+
+    public boolean validateUserUsable(String empName) {
+        EmployeeExample example = new EmployeeExample();
+        EmployeeExample.Criteria criteria = example.createCriteria();
+        criteria.andEmpNameEqualTo(empName);
+        return employeeMapper.countByExample(example) == 0;
     }
 }
