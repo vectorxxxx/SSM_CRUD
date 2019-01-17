@@ -23,20 +23,20 @@ import xyz.funnyboy.crud.model.Employee;
  * @desciption This is a program.
  * @since Java10
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:spring-*.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@WebAppConfiguration
+//@ContextConfiguration(locations = {"classpath:spring-*.xml"})
 public class EmployeeControllerTest {
     @Autowired
     WebApplicationContext context;
     MockMvc mockMvc;
 
-    @Before
+//    @Before
     public void initMockMvc() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
-    @Test
+//    @Test
     public void testGet() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("pg", "1")).andReturn();
         MockHttpServletRequest request = result.getRequest();

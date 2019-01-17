@@ -60,10 +60,10 @@
                         <label class="col-sm-2 control-label">Gender</label>
                         <div class="col-sm-10">
                             <label class="radio-inline">
-                                <input type="radio" name="gender" id="male_radio" value="male" checked> 男
+                                <input type="radio" name="gender" id="male_radio" value="男" checked> 男
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" id="female_radio" value="female"> 女
+                                <input type="radio" name="gender" id="female_radio" value="女"> 女
                             </label>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" id="emp_save_btn">Save</button>
             </div>
         </div>
     </div>
@@ -117,6 +117,7 @@
     </div>
 </div>
 <script>
+    var totalRecord;
     $(function () {
         to_page(1);
     });
@@ -165,6 +166,7 @@
         var pageInfo = result.extend.pageInfo;
         $("<p></p>").append("Current page:" + pageInfo.pageNum + ", All pages: " + pageInfo.pages + ", All records: " + pageInfo.total)
             .appendTo("#page_info_area");
+        totalRecord = pageInfo.total;
     }
 
     function build_page_nav(result) {
@@ -220,10 +222,40 @@
     }
 
     $("#emp_add_btn").click(function () {
+        getDepts();
         $("#empAddModal").modal({
             backdrop: "static"
         });
     });
+
+    function getDepts() {
+        $.ajax({
+            url:"${APP_PATH}/depts",
+            type:"GET",
+            success:function (result) {
+                $.each(result.extend.depts,function () {
+                    var $option = $("<option></option>").attr("value",this.deptId).append(this.deptName);
+                    $("#empAddModal select").append($option);
+                });
+            }
+        });
+    }
+
+    $("#emp_save_btn").click(function () {
+        saveEmp();
+    });
+
+    function saveEmp() {
+        $.ajax({
+            url:"${APP_PATH}/emps",
+            type:"POST",
+            data:$(".form-horizontal").serialize(),
+            success:function (result) {
+                $("#empAddModal").modal("hide");
+                to_page(totalRecord);
+            }
+        });
+    }
 </script>
 </body>
 </html>

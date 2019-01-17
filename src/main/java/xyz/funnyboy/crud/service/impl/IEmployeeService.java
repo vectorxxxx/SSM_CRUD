@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import xyz.funnyboy.crud.dao.EmployeeMapper;
+import xyz.funnyboy.crud.model.Employee;
 import xyz.funnyboy.crud.service.EmployeeService;
 
 import java.util.List;
@@ -21,5 +22,9 @@ public class IEmployeeService implements EmployeeService {
     EmployeeMapper employeeMapper;
     public List getAll() {
         return employeeMapper.selectByExampleWithDept(null);
+    }
+
+    public int insertEmp(Employee employee) {
+        return employeeMapper.insertSelective(employee);
     }
 }

@@ -1,6 +1,7 @@
 package xyz.funnyboy.crud.service;
 
 import org.springframework.ui.Model;
+import xyz.funnyboy.crud.model.Employee;
 
 import java.util.List;
 
@@ -12,5 +13,7 @@ import java.util.List;
  * @since Java10
  */
 public interface EmployeeService {
-    public List getAll();
+    List getAll();
+
+    int insertEmp(Employee employee);
 }

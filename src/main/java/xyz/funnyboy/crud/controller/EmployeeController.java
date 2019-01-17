@@ -28,6 +28,12 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @RequestMapping(value = "/emps",method = RequestMethod.POST)
+    @ResponseBody
+    public Msg saveEmp(Employee employee){
+        int success = employeeService.insertEmp(employee);
+        return Msg.success().add("success",success);
+    }
     @RequestMapping(value = "/emps",method = RequestMethod.GET)
     @ResponseBody
     public Msg getEmpsWithJson(@RequestParam(value = "pg", defaultValue = "1") Integer pg) {
@@ -35,13 +41,5 @@ public class EmployeeController {
         List<Employee> employees = employeeService.getAll();
         PageInfo pageInfo = new PageInfo(employees, 5);
         return Msg.success().add("pageInfo",pageInfo);
-    }
-//    @RequestMapping(value = "/emps",method = RequestMethod.GET)
-    public String getEmps(@RequestParam(value = "pg", defaultValue = "1") Integer pg, Model model) {
-        PageHelper.startPage(pg, 5);
-        List<Employee> employees = employeeService.getAll();
-        PageInfo pageInfo = new PageInfo(employees, 5);
-        model.addAttribute("pageInfo", pageInfo);
-        return "list";
     }
 }

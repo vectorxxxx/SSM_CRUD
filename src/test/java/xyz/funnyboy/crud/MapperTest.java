@@ -22,8 +22,8 @@ import java.util.UUID;
  * @desciption This is a program.
  * @since Java10
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
 public class MapperTest {
     @Autowired
     private DepartmentMapper departmentMapper;
@@ -33,7 +33,7 @@ public class MapperTest {
     @Autowired
     SqlSession sqlSession;
 
-    @Test
+//    @Test
     public void testCRUD() {
 //        System.out.println(departmentMapper);
 //        departmentMapper.insertSelective(new Department(null, "研发部"));
@@ -47,16 +47,15 @@ public class MapperTest {
             employeeMapper.insertSelective(new Employee(null, uid, "男", uid + "@funnyboy.xyz", 1));
         }
     }
-    @Test
+//    @Test
     public void testDelete(){
         employeeMapper.deleteByPrimaryKey(1001);
     }
-    @Test
+//    @Test
     public void testUpdate(){
         employeeMapper.updateByPrimaryKey(new Employee(1,"刘备","男","liubei@funnyboy.xyz",1));
     }
-
-    @Test
+//    @Test
     public void testSelect() {
         Employee employee = employeeMapper.selectByPrimaryKeyWithDept(1);
         System.err.println(employee.getDepartment().getDeptName());
