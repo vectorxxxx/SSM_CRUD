@@ -228,7 +228,7 @@
 
     $("#emp_add_btn").click(function () {
         $("#empAddModal form")[0].reset();
-        $("#emp_save_btn").removeAttr("status");
+        $("#emp_save_btn").removeAttr("status1").removeAttr("status2");
         getDepts();
         $("#empAddModal").modal({
             backdrop: "static"
