@@ -36,7 +36,7 @@ public class EmployeeController {
     @RequestMapping(value = "/validateuser", method = RequestMethod.POST)
     @ResponseBody
     public Msg validateUser(@RequestParam("empName") String empName) {
-        String regName = "(^[a-z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5}$)";
+        String regName = "^[a-z0-9_-]{6,16}$|^[\\u2E80-\\u9FFF]{2,5}$";
         if (!empName.matches(regName)) {
             return Msg.failed().add("msg", "用户名不合法");
         }

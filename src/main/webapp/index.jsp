@@ -252,7 +252,7 @@
     $("#emp_name_input").change(function () {
         var $emp_name_input = $("#emp_name_input");
         var empName = $emp_name_input.val();
-        var regName = /(^[a-z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5}$)/;
+        var regName = 	/^[a-z0-9_-]{6,16}$|^[\u2E80-\u9FFF]{2,5}$/;
         if (empName == "") {
             show_validate($emp_name_input, error, "员工名不能为空");
             $("#emp_save_btn").attr("status1", "error");
