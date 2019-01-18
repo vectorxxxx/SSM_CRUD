@@ -228,6 +228,7 @@
 
     $("#emp_add_btn").click(function () {
         $("#empAddModal form")[0].reset();
+        $(".help-block").empty();
         $("#emp_save_btn").removeAttr("status1").removeAttr("status2");
         getDepts();
         $("#empAddModal").modal({
@@ -256,7 +257,7 @@
             show_validate($emp_name_input, error, "员工名不能为空");
             $("#emp_save_btn").attr("status1", "error");
         } else if (!regName.test(empName)) {
-            show_validate($emp_name_input, error, "员工格式不正确");
+            show_validate($emp_name_input, error, "用户名不合法");
             $("#emp_save_btn").attr("status1", "error");
         } else {
             $.ajax({
@@ -265,7 +266,7 @@
                 data: "empName=" + empName,
                 success: function (result) {
                     if (result.code == 200) {
-                        show_validate($emp_name_input, error, "员工名已存在");
+                        show_validate($emp_name_input, error, result.extend.msg);
                         $("#emp_save_btn").attr("status1", "error");
                     } else if (result.code == 100) {
                         show_validate($emp_name_input, success, "");
@@ -274,8 +275,8 @@
                 }
             });
         }
-
     });
+
     $("#emp_email_input").change(function () {
         var $emp_email_input = $("#emp_email_input");
         var email = $emp_email_input.val();
@@ -284,7 +285,7 @@
             show_validate($emp_email_input, error, "邮箱不能为空");
             $("#emp_save_btn").attr("status2", "error");
         } else if (!regEmail.test(email)) {
-            show_validate($emp_email_input, error, "邮箱格式不正确");
+            show_validate($emp_email_input, error, "邮箱不合法");
             $("#emp_save_btn").attr("status2", "error");
         } else {
             show_validate($emp_email_input, success, "");
@@ -296,10 +297,27 @@
         if (!validate_add_form()) {
             return false;
         }
-        if ($(this).attr("status1")=="error"||$(this).attr("status2")=="error") {
+        if ($(this).attr("status1") == "error" || $(this).attr("status2") == "error") {
             return false;
         }
-        saveEmp();
+        var $emp_name_input = $("#emp_name_input");
+        var empName = $emp_name_input.val();
+        $.ajax({
+            url: "${APP_PATH}/validateuser",
+            type: "POST",
+            data: "empName=" + empName,
+            success: function (result) {
+                if (result.code == 200) {
+                    show_validate($emp_name_input, error, result.extend.msg);
+                    $(this).attr("status1", "error");
+                    return false;
+                } else if (result.code == 100) {
+                    show_validate($emp_name_input, success, "");
+                    $(this).removeAttr("status1").removeAttr("status2");
+                    saveEmp();
+                }
+            }
+        });
     });
 
     function validate_add_form() {
@@ -339,8 +357,17 @@
             type: "POST",
             data: $(".form-horizontal").serialize(),
             success: function (result) {
-                $("#empAddModal").modal("hide");
-                to_page(totalRecord);
+                if (result.code == 200) {
+                    if ("undefined" == result.extend.result.empName) {
+                        show_validate("#emp_email_input", error, result.extend.result.empName);
+                    }
+                    if ("undefined" == result.extend.result.email) {
+                        show_validate("#emp_email_input", error, result.extend.result.email);
+                    }
+                } else if (result.code == 100) {
+                    $("#empAddModal").modal("hide");
+                    to_page(totalRecord);
+                }
             }
         });
     }
