@@ -57,8 +57,8 @@ public class MapperTest {
     }
 //    @Test
     public void testSelect() {
-        Employee employee = employeeMapper.selectByPrimaryKeyWithDept(1);
-        System.err.println(employee.getDepartment().getDeptName());
+        Employee employee = employeeMapper.selectByPrimaryKey(1);
+        System.err.println(employee.getEmpName());
     }
 
 }

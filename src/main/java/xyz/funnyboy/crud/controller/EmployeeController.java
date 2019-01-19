@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import xyz.funnyboy.crud.model.Employee;
 import xyz.funnyboy.crud.model.Msg;
 import xyz.funnyboy.crud.service.EmployeeService;
@@ -33,6 +30,15 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @RequestMapping(value = "/emp/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getEmp(@PathVariable("id") Integer id){
+        Employee employee = employeeService.getEmp(id);
+        if(employee==null){
+            return Msg.failed().add("msg","无此员工记录");
+        }
+        return Msg.success().add("emp",employee);
+    }
     @RequestMapping(value = "/validateuser", method = RequestMethod.POST)
     @ResponseBody
     public Msg validateUser(@RequestParam("empName") String empName) {

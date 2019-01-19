@@ -32,6 +32,57 @@
 </head>
 <body>
 <!-- Modal -->
+<div class="modal fade" id="empUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit Employee</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="emp_name_input" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static" id="emp_name_p"></p>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp_email_input" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" name="email" class="form-control" id="emp_email_input_update"
+                                   placeholder="zhangsan@funnyboy.xyz">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Gender</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="男" checked> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="女"> 女
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Department</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="deptId"> </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="emp_update_btn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -45,7 +96,7 @@
                     <div class="form-group">
                         <label for="emp_name_input" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-10">
-                            <input type="email" name="empName" class="form-control" id="emp_name_input"
+                            <input type="text" name="empName" class="form-control" id="emp_name_input"
                                    placeholder="张三">
                             <span class="help-block"></span>
                         </div>
@@ -53,7 +104,7 @@
                     <div class="form-group">
                         <label for="emp_email_input" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-10">
-                            <input type="password" name="email" class="form-control" id="emp_email_input"
+                            <input type="email" name="email" class="form-control" id="emp_email_input"
                                    placeholder="zhangsan@funnyboy.xyz">
                             <span class="help-block"></span>
                         </div>
@@ -92,8 +143,8 @@
     </div>
     <div class="row">
         <div class="col-md-4 col-md-offset-8">
-            <button class="btn btn-primary" id="emp_add_btn">New</button>
-            <button class="btn btn-danger" id="emp_del_btn">Delete</button>
+            <button class="btn btn-primary" id="emp_add_btn">Add</button>
+            <button class="btn btn-danger" id="emp_del_btn">Del</button>
         </div>
     </div>
     <div class="row">
@@ -149,10 +200,11 @@
             var $emailTd = $("<td></td>").append(item.email);
             var $genderTd = $("<td></td>").append(item.gender);
             var $deptNameTd = $("<td></td>").append(item.department.deptName);
-            var $editBtn = $("<button></button>").addClass("btn btn-primary btn-sm")
+            var $editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
                 .append("Edit");
-            var $delBtn = $("<button></button>").addClass("btn btn-danger btn-sm")
+            $editBtn.attr("empId",item.empId);
+            var $delBtn = $("<button></button>").addClass("btn btn-danger btn-sm del_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
                 .append("Delete");
             var $btnTd = $("<td></td>").append($editBtn).append(" ").append($delBtn);
@@ -230,20 +282,21 @@
         $("#empAddModal form")[0].reset();
         $(".help-block").empty();
         $("#emp_save_btn").removeAttr("status1").removeAttr("status2");
-        getDepts();
+        getDepts("#empAddModal select");
         $("#empAddModal").modal({
             backdrop: "static"
         });
     });
 
-    function getDepts() {
+    function getDepts(ele) {
+        $(ele).empty();
         $.ajax({
             url: "${APP_PATH}/depts",
             type: "GET",
             success: function (result) {
                 $.each(result.extend.depts, function () {
                     var $option = $("<option></option>").attr("value", this.deptId).append(this.deptName);
-                    $("#empAddModal select").append($option);
+                    $(ele).append($option);
                 });
             }
         });
@@ -368,6 +421,31 @@
                     $("#empAddModal").modal("hide");
                     to_page(totalRecord);
                 }
+            }
+        });
+    }
+
+    $(document).on("click",".edit_btn",function () {
+        $("#empUpdateModal form")[0].reset();
+        $(".help-block").empty();
+        getDepts("#empUpdateModal select");
+        getEmp($(this).attr("empId"));
+        $("#empUpdateModal").modal({
+            backdrop: "static"
+        });
+    })
+
+    function getEmp(empId) {
+        $("#emp_name_p").empty();
+        $.ajax({
+            url:"${APP_PATH}/emp/"+empId,
+            type:"GET",
+            success:function (result) {
+                var emp = result.extend.emp;
+                $("#emp_name_p").text(emp.empName);
+                $("#emp_email_input_update").val(emp.email);
+                $("#empUpdateModal input[name=gender]").val([emp.gender]);
+                $("#empUpdateModal select[name=deptId]").val([emp.deptId]);
             }
         });
     }

@@ -35,4 +35,8 @@ public class IEmployeeService implements EmployeeService {
         criteria.andEmpNameEqualTo(empName);
         return employeeMapper.countByExample(example) == 0;
     }
+
+    public Employee getEmp(Integer id) {
+        return employeeMapper.selectByPrimaryKey(id);
+    }
 }

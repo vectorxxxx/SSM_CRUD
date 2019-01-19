@@ -18,4 +18,6 @@ public interface EmployeeService {
     int insertEmp(Employee employee);
 
     boolean validateUserUsable(String empName);
+
+    Employee getEmp(Integer id);
 }
