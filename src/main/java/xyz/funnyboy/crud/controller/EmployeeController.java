@@ -30,6 +30,22 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+
+    @RequestMapping(value = "/emp/{empId}",method = RequestMethod.PUT)
+    @ResponseBody
+    public Msg updateEmp(@Valid Employee employee, BindingResult result){
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
+                map.put(error.getField(), error.getDefaultMessage());
+            }
+            return Msg.failed().add("error", map);
+        } else {
+            employeeService.updateEmp(employee);
+            return Msg.success().add("success",employee);
+        }
+    }
+
     @RequestMapping(value = "/emp/{id}",method = RequestMethod.GET)
     @ResponseBody
     public Msg getEmp(@PathVariable("id") Integer id){

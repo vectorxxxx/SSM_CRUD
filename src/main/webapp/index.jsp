@@ -171,6 +171,7 @@
 </div>
 <script>
     var totalRecord;
+    var currentPage;
     var success = "success";
     var error = "error";
 
@@ -203,7 +204,7 @@
             var $editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
                 .append("Edit");
-            $editBtn.attr("empId",item.empId);
+            $editBtn.attr("empId", item.empId);
             var $delBtn = $("<button></button>").addClass("btn btn-danger btn-sm del_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
                 .append("Delete");
@@ -224,6 +225,7 @@
         $("<p></p>").append("Current page:" + pageInfo.pageNum + ", All pages: " + pageInfo.pages + ", All records: " + pageInfo.total)
             .appendTo("#page_info_area");
         totalRecord = pageInfo.total;
+        currentPage = pageInfo.pageNum;
     }
 
     function build_page_nav(result) {
@@ -305,7 +307,7 @@
     $("#emp_name_input").change(function () {
         var $emp_name_input = $("#emp_name_input");
         var empName = $emp_name_input.val();
-        var regName = 	/^[a-z0-9_-]{6,16}$|^[\u2E80-\u9FFF]{2,5}$/;
+        var regName = /^[a-z0-9_-]{6,16}$|^[\u2E80-\u9FFF]{2,5}$/;
         if (empName == "") {
             show_validate($emp_name_input, error, "员工名不能为空");
             $("#emp_save_btn").attr("status1", "error");
@@ -391,11 +393,11 @@
     function show_validate(ele, status, msg) {
         emptyInfo(ele);
         if (error == status) {
-            $(ele).parent().addClass("has-error");
-            $(ele).next("span").append(msg);
+            ele.parent().addClass("has-error");
+            ele.next("span").append(msg);
         } else if (success == status) {
-            $(ele).parent().addClass("has-success");
-            $(ele).next("span").append(msg);
+            ele.parent().addClass("has-success");
+            ele.next("span").append(msg);
         }
     }
 
@@ -408,11 +410,11 @@
         $.ajax({
             url: "${APP_PATH}/emps",
             type: "POST",
-            data: $(".form-horizontal").serialize(),
+            data: $("#empAddModal .form-horizontal").serialize(),
             success: function (result) {
                 if (result.code == 200) {
                     if ("undefined" == result.extend.result.empName) {
-                        show_validate("#emp_email_input", error, result.extend.result.empName);
+                        show_validate("#emp_name_input", error, result.extend.result.empName);
                     }
                     if ("undefined" == result.extend.result.email) {
                         show_validate("#emp_email_input", error, result.extend.result.email);
@@ -425,7 +427,7 @@
         });
     }
 
-    $(document).on("click",".edit_btn",function () {
+    $(document).on("click", ".edit_btn", function () {
         $("#empUpdateModal form")[0].reset();
         $(".help-block").empty();
         getDepts("#empUpdateModal select");
@@ -433,19 +435,70 @@
         $("#empUpdateModal").modal({
             backdrop: "static"
         });
-    })
+    });
 
     function getEmp(empId) {
         $("#emp_name_p").empty();
         $.ajax({
-            url:"${APP_PATH}/emp/"+empId,
-            type:"GET",
-            success:function (result) {
+            url: "${APP_PATH}/emp/" + empId,
+            type: "GET",
+            success: function (result) {
                 var emp = result.extend.emp;
                 $("#emp_name_p").text(emp.empName);
                 $("#emp_email_input_update").val(emp.email);
                 $("#empUpdateModal input[name=gender]").val([emp.gender]);
                 $("#empUpdateModal select[name=deptId]").val([emp.deptId]);
+                $("#emp_update_btn").attr("empId", emp.empId);
+            }
+        });
+    }
+
+    function validate_email(ele) {
+        var email = $(ele).val();
+        var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+        if (!regEmail.test(email)) {
+            show_validate($(ele), error, "邮箱不合法");
+            $("#emp_update_btn").attr("status", "error");
+            return false;
+        } else {
+            show_validate($(ele), success, "");
+            $("#emp_update_btn").removeAttr("status");
+            return true;
+        }
+    }
+
+    $("#emp_email_input_update").change(function () {
+        validate_email(this);
+    });
+    $("#emp_update_btn").click(function () {
+        if ($("#emp_email_input_update").val() == "") {
+            return false;
+        }
+        if ($(this).attr("status") == "error") {
+            return false;
+        }
+        var empId = $(this).attr("empId");
+        updateEmp(empId);
+    });
+
+    <%--function updateEmp(empId) {--%>
+        <%--$.ajax({--%>
+            <%--url: "${APP_PATH}/emp/" + empId,--%>
+            <%--type: "POST",--%>
+            <%--data: $("#empUpdateModal form").serialize()+"&_method=PUT",--%>
+            <%--success:function (result) {--%>
+                <%--console.log(result.extend.success);--%>
+            <%--}--%>
+        <%--});--%>
+    <%--}--%>
+    function updateEmp(empId) {
+        $.ajax({
+            url: "${APP_PATH}/emp/" + empId,
+            type: "PUT",
+            data: $("#empUpdateModal form").serialize(),
+            success:function (result) {
+                $("#empUpdateModal").modal("hide");
+                to_page(currentPage);
             }
         });
     }

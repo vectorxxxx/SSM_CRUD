@@ -3,6 +3,7 @@ package xyz.funnyboy.crud.service;
 import org.springframework.ui.Model;
 import xyz.funnyboy.crud.model.Employee;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -20,4 +21,6 @@ public interface EmployeeService {
     boolean validateUserUsable(String empName);
 
     Employee getEmp(Integer id);
+
+    int updateEmp(@Valid Employee employee);
 }

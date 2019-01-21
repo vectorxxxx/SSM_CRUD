@@ -8,6 +8,7 @@ import xyz.funnyboy.crud.model.Employee;
 import xyz.funnyboy.crud.model.EmployeeExample;
 import xyz.funnyboy.crud.service.EmployeeService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -38,5 +39,9 @@ public class IEmployeeService implements EmployeeService {
 
     public Employee getEmp(Integer id) {
         return employeeMapper.selectByPrimaryKey(id);
+    }
+
+    public int updateEmp(@Valid Employee employee) {
+        return employeeMapper.updateByPrimaryKeySelective(employee);
     }
 }
