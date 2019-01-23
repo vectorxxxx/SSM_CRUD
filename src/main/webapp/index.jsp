@@ -152,6 +152,7 @@
             <table class="table table-hover" id="emps_table">
                 <thead>
                 <tr>
+                    <th><input type="checkbox" class="check_all"></th>
                     <th>#</th>
                     <th>last name</th>
                     <th>email</th>
@@ -196,6 +197,7 @@
         $("#emps_table tbody").empty();
         var emps = result.extend.pageInfo.list;
         $.each(emps, function (index, item) {
+            var $checkBtn = $("<td><input type=\"checkbox\" class=\"check_item\"/></td>");
             var $empIdTd = $("<td></td>").append(item.empId);
             var $empNameTd = $("<td></td>").append(item.empName);
             var $emailTd = $("<td></td>").append(item.email);
@@ -210,7 +212,8 @@
                 .append("Delete");
             $delBtn.attr("empId", item.empId);
             var $btnTd = $("<td></td>").append($editBtn).append(" ").append($delBtn);
-            $("<tr></tr>").append($empIdTd)
+            $("<tr></tr>").append($checkBtn)
+                .append($empIdTd)
                 .append($empNameTd)
                 .append($emailTd)
                 .append($genderTd)
@@ -522,6 +525,13 @@
                 }
             });
         }
+    });
+    $(".check_all").click(function () {
+        $(".check_item").prop("checked",$(this).prop("checked"));
+    });
+    $(document).on("click",".check_item",function () {
+        var flags = $(".check_item:checked").length==$(".check_item").length;
+        $(".check_all").prop("checked",flags);
     })
 </script>
 </body>
