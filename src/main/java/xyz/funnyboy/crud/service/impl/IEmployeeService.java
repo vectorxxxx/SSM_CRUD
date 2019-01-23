@@ -44,4 +44,8 @@ public class IEmployeeService implements EmployeeService {
     public int updateEmp(@Valid Employee employee) {
         return employeeMapper.updateByPrimaryKeySelective(employee);
     }
+
+    public int delEmpById(Integer empId) {
+        return employeeMapper.deleteByPrimaryKey(empId);
+    }
 }

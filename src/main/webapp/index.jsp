@@ -208,6 +208,7 @@
             var $delBtn = $("<button></button>").addClass("btn btn-danger btn-sm del_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
                 .append("Delete");
+            $delBtn.attr("empId", item.empId);
             var $btnTd = $("<td></td>").append($editBtn).append(" ").append($delBtn);
             $("<tr></tr>").append($empIdTd)
                 .append($empNameTd)
@@ -482,26 +483,46 @@
     });
 
     <%--function updateEmp(empId) {--%>
-        <%--$.ajax({--%>
-            <%--url: "${APP_PATH}/emp/" + empId,--%>
-            <%--type: "POST",--%>
-            <%--data: $("#empUpdateModal form").serialize()+"&_method=PUT",--%>
-            <%--success:function (result) {--%>
-                <%--console.log(result.extend.success);--%>
-            <%--}--%>
-        <%--});--%>
+    <%--$.ajax({--%>
+    <%--url: "${APP_PATH}/emp/" + empId,--%>
+    <%--type: "POST",--%>
+    <%--data: $("#empUpdateModal form").serialize()+"&_method=PUT",--%>
+    <%--success:function (result) {--%>
+    <%--console.log(result.extend.success);--%>
     <%--}--%>
+    <%--});--%>
+    <%--}--%>
+
     function updateEmp(empId) {
         $.ajax({
             url: "${APP_PATH}/emp/" + empId,
             type: "PUT",
             data: $("#empUpdateModal form").serialize(),
-            success:function (result) {
+            success: function (result) {
                 $("#empUpdateModal").modal("hide");
                 to_page(currentPage);
             }
         });
     }
+
+    $(document).on("click", ".del_btn", function () {
+        var empId = $(this).attr("empId");
+        var empName = $(this).parents("tr").find("td:eq(1)").text();
+        if (confirm("You want to delete [" + empName + "] ?")) {
+            $.ajax({
+                url: "${APP_PATH}/emp/" + empId,
+                type: "DELETE",
+                success: function (result) {
+                    if (result.code == 200) {
+                        alert("Delete failed");
+                    }else if (result.code == 100) {
+                        alert("Delete success");
+                        to_page(currentPage);
+                    }
+                }
+            });
+        }
+    })
 </script>
 </body>
 </html>

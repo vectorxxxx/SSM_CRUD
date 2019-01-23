@@ -23,4 +23,6 @@ public interface EmployeeService {
     Employee getEmp(Integer id);
 
     int updateEmp(@Valid Employee employee);
+
+    int delEmpById(Integer empId);
 }

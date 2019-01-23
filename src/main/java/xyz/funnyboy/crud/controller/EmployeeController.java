@@ -30,6 +30,15 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @RequestMapping(value = "/emp/{empId}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public Msg delEmp(@PathVariable("empId") Integer empId){
+        boolean result = employeeService.delEmpById(empId)==1;
+        if(result)
+            return Msg.success();
+        else
+            return Msg.failed();
+    }
 
     @RequestMapping(value = "/emp/{empId}",method = RequestMethod.PUT)
     @ResponseBody
