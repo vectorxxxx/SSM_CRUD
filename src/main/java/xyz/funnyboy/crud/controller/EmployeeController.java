@@ -30,19 +30,25 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "/emp/{empId}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/emp/{empIds}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Msg delEmp(@PathVariable("empId") Integer empId){
-        boolean result = employeeService.delEmpById(empId)==1;
-        if(result)
+    public Msg delEmp(@PathVariable("empIds") String empIds) {
+        boolean result;
+        if (!empIds.contains("-")) {
+            Integer empId = Integer.parseInt(empIds);
+            result = employeeService.delEmpById(empId) == 1;
+        } else {
+            result = employeeService.delEmps(empIds) != 0;
+        }
+        if (result)
             return Msg.success();
         else
             return Msg.failed();
     }
 
-    @RequestMapping(value = "/emp/{empId}",method = RequestMethod.PUT)
+    @RequestMapping(value = "/emp/{empId}", method = RequestMethod.PUT)
     @ResponseBody
-    public Msg updateEmp(@Valid Employee employee, BindingResult result){
+    public Msg updateEmp(@Valid Employee employee, BindingResult result) {
         Map<String, Object> map = new HashMap<String, Object>();
         if (result.hasErrors()) {
             for (FieldError error : result.getFieldErrors()) {
@@ -51,19 +57,20 @@ public class EmployeeController {
             return Msg.failed().add("error", map);
         } else {
             employeeService.updateEmp(employee);
-            return Msg.success().add("success",employee);
+            return Msg.success().add("success", employee);
         }
     }
 
-    @RequestMapping(value = "/emp/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/emp/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Msg getEmp(@PathVariable("id") Integer id){
+    public Msg getEmp(@PathVariable("id") Integer id) {
         Employee employee = employeeService.getEmp(id);
-        if(employee==null){
-            return Msg.failed().add("msg","无此员工记录");
+        if (employee == null) {
+            return Msg.failed().add("msg", "无此员工记录");
         }
-        return Msg.success().add("emp",employee);
+        return Msg.success().add("emp", employee);
     }
+
     @RequestMapping(value = "/validateuser", method = RequestMethod.POST)
     @ResponseBody
     public Msg validateUser(@RequestParam("empName") String empName) {

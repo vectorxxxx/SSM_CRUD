@@ -25,4 +25,6 @@ public interface EmployeeService {
     int updateEmp(@Valid Employee employee);
 
     int delEmpById(Integer empId);
+
+    int delEmps(String empIds);
 }

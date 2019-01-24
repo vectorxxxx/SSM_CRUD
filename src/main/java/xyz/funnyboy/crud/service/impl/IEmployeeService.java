@@ -9,6 +9,7 @@ import xyz.funnyboy.crud.model.EmployeeExample;
 import xyz.funnyboy.crud.service.EmployeeService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,5 +48,16 @@ public class IEmployeeService implements EmployeeService {
 
     public int delEmpById(Integer empId) {
         return employeeMapper.deleteByPrimaryKey(empId);
+    }
+
+    public int delEmps(String empIds) {
+        List<Integer> empIdLists = new ArrayList<Integer>();
+        for(String empId:empIds.split("-")){
+            empIdLists.add(Integer.parseInt(empId));
+        }
+        EmployeeExample example = new EmployeeExample();
+        EmployeeExample.Criteria criteria = example.createCriteria();
+        criteria.andEmpIdIn(empIdLists);
+        return employeeMapper.deleteByExample(example);
     }
 }

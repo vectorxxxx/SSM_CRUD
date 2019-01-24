@@ -186,6 +186,7 @@
             data: "pg=" + pg,
             type: "GET",
             success: function (result) {
+                $(".check_all").prop("checked", false);
                 build_emps_table(result);
                 build_page_info(result);
                 build_page_nav(result);
@@ -510,7 +511,7 @@
 
     $(document).on("click", ".del_btn", function () {
         var empId = $(this).attr("empId");
-        var empName = $(this).parents("tr").find("td:eq(1)").text();
+        var empName = $(this).parents("tr").find("td:eq(2)").text();
         if (confirm("You want to delete [" + empName + "] ?")) {
             $.ajax({
                 url: "${APP_PATH}/emp/" + empId,
@@ -518,7 +519,7 @@
                 success: function (result) {
                     if (result.code == 200) {
                         alert("Delete failed");
-                    }else if (result.code == 100) {
+                    } else if (result.code == 100) {
                         alert("Delete success");
                         to_page(currentPage);
                     }
@@ -527,12 +528,37 @@
         }
     });
     $(".check_all").click(function () {
-        $(".check_item").prop("checked",$(this).prop("checked"));
+        $(".check_item").prop("checked", $(this).prop("checked"));
     });
-    $(document).on("click",".check_item",function () {
-        var flags = $(".check_item:checked").length==$(".check_item").length;
-        $(".check_all").prop("checked",flags);
-    })
+    $(document).on("click", ".check_item", function () {
+        var flags = $(".check_item:checked").length == $(".check_item").length;
+        $(".check_all").prop("checked", flags);
+    });
+    $("#emp_del_btn").click(function () {
+        var empNames = "";
+        var empIds = "";
+        $.each($(".check_item:checked"), function () {
+            var empId = $(this).parents("tr").find("td:eq(1)").text();
+            var empName = $(this).parents("tr").find("td:eq(2)").text();
+            empNames += empName + ",";
+            empIds += empId + "-";
+        });
+        empNames = empNames.substring(0, empNames.length - 1);
+        if (confirm("You want to delete[" + empNames + "]")) {
+            $.ajax({
+                url: "${APP_PATH}/emp/" + empIds,
+                type: "DELETE",
+                success: function (result) {
+                    if(result.code==200) {
+                        alert("Delete failed");
+                    }else if(result.code ==100) {
+                        alert("Delete success");
+                        to_page(currentPage);
+                    }
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>
