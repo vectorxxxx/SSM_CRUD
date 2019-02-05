@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ChatRobot" />
+        <module name="SSM_CRUD" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="ChatRobot" target="1.8" />
+      <module name="SSM_CRUD" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="ChatRobot:war exploded">
+  <artifact type="exploded-war" name="SSM_CRUD:war exploded">
     <output-path>$PROJECT_DIR$/target/ChatRobot</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
