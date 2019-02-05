@@ -24,7 +24,7 @@ import java.util.Map;
  * @desciption This is a program.
  * @since Java10
  */
-@Controller()
+@Controller
 public class EmployeeController {
 
     @Autowired
