@@ -29,7 +29,7 @@
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-<!-- Modal -->
+<!-- Modal更新模态框 -->
 <div class="modal fade" id="empUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -81,6 +81,7 @@
         </div>
     </div>
 </div>
+<%--添加模态框--%>
 <div class="modal fade" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -174,10 +175,12 @@
     var success = "success";
     var error = "error";
 
+    // jquery入口函数
     $(function () {
-        to_page(1);
+        to_page(1); //初次进入默认查询第一页
     });
 
+    // 使用ajax技术发送和接收GET请求，分页查询员工信息
     function to_page(pg) {
         $.ajax({
             url: "${APP_PATH}/emps",
@@ -185,31 +188,43 @@
             type: "GET",
             success: function (result) {
                 $(".check_all").prop("checked", false);
+                // 构建员工表信息
                 build_emps_table(result);
+                // 构建分页信息：包括当前页、总页数等
                 build_page_info(result);
+                // 构建分页导航栏
                 build_page_nav(result);
             }
         });
     }
-
+    // 构建员工表信息
     function build_emps_table(result) {
         $("#emps_table tbody").empty();
         var emps = result.extend.pageInfo.list;
         $.each(emps, function (index, item) {
+            // 多选按钮
             var $checkBtn = $("<td><input type=\"checkbox\" class=\"check_item\"/></td>");
+            // 员工ID
             var $empIdTd = $("<td></td>").append(item.empId);
+            // 员工姓名
             var $empNameTd = $("<td></td>").append(item.empName);
+            // 邮箱
             var $emailTd = $("<td></td>").append(item.email);
+            // 性别
             var $genderTd = $("<td></td>").append(item.gender);
+            // 部门名称
             var $deptNameTd = $("<td></td>").append(item.department.deptName);
+            // 编辑按钮
             var $editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
                 .append("Edit");
             $editBtn.attr("empId", item.empId);
+            // 删除按钮
             var $delBtn = $("<button></button>").addClass("btn btn-danger btn-sm del_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
                 .append("Delete");
             $delBtn.attr("empId", item.empId);
+            // 按钮单元
             var $btnTd = $("<td></td>").append($editBtn).append(" ").append($delBtn);
             $("<tr></tr>").append($checkBtn)
                 .append($empIdTd)
@@ -221,7 +236,7 @@
                 .appendTo("#emps_table tbody");
         });
     }
-
+    // 构建分页信息：包括当前页、总页数等
     function build_page_info(result) {
         $("#page_info_area").empty();
         var pageInfo = result.extend.pageInfo;
@@ -230,7 +245,7 @@
         totalRecord = pageInfo.total;
         currentPage = pageInfo.pageNum;
     }
-
+    // 构建分页导航栏
     function build_page_nav(result) {
         $("#page_nav_area").empty();
         var pageInfo = result.extend.pageInfo;
@@ -282,17 +297,20 @@
         $ul.append($lastLi);
         $nav.appendTo("#page_nav_area");
     }
-
+    // 添加员工时弹出添加模态框
     $("#emp_add_btn").click(function () {
+        // 每次调用模态框时重置表单信息
         $("#empAddModal form")[0].reset();
         $(".help-block").empty();
         $("#emp_save_btn").removeAttr("status1").removeAttr("status2");
+        // 获取部门信息
         getDepts("#empAddModal select");
+        // 弹出模态框
         $("#empAddModal").modal({
             backdrop: "static"
         });
     });
-
+    // 获取部门信息
     function getDepts(ele) {
         $(ele).empty();
         $.ajax({
@@ -306,7 +324,7 @@
             }
         });
     }
-
+    // 姓名合法性校验
     $("#emp_name_input").change(function () {
         var $emp_name_input = $("#emp_name_input");
         var empName = $emp_name_input.val();
@@ -334,7 +352,7 @@
             });
         }
     });
-
+    // 邮箱合法性校验
     $("#emp_email_input").change(function () {
         var $emp_email_input = $("#emp_email_input");
         var email = $emp_email_input.val();
@@ -350,7 +368,7 @@
             $("#emp_save_btn").removeAttr("status2");
         }
     });
-
+    // 提交时再进行合法性校验
     $("#emp_save_btn").click(function () {
         if (!validate_add_form()) {
             return false;
@@ -377,7 +395,7 @@
             }
         });
     });
-
+    // 非空校验
     function validate_add_form() {
         var $emp_name_input = $("#emp_name_input");
         var empName = $emp_name_input.val();
@@ -392,7 +410,7 @@
         }
         return true;
     }
-
+    // 显示校验信息
     function show_validate(ele, status, msg) {
         emptyInfo(ele);
         if (error == status) {
@@ -403,12 +421,7 @@
             ele.next("span").append(msg);
         }
     }
-
-    function emptyInfo(ele) {
-        $(ele).parent().removeClass("has-error has-success");
-        $(ele).next("span").empty();
-    }
-
+    // 2. 校验成功后添加员工信息
     function saveEmp() {
         $.ajax({
             url: "${APP_PATH}/emps",
@@ -430,16 +443,24 @@
         });
     }
 
+    function emptyInfo(ele) {
+        $(ele).parent().removeClass("has-error has-success");
+        $(ele).next("span").empty();
+    }
+
+    // 弹出编辑模态框
     $(document).on("click", ".edit_btn", function () {
         $("#empUpdateModal form")[0].reset();
         $(".help-block").empty();
+        // 获取部门信息
         getDepts("#empUpdateModal select");
+        // 获取当前员工信息
         getEmp($(this).attr("empId"));
         $("#empUpdateModal").modal({
             backdrop: "static"
         });
     });
-
+    // 查询单个员工数据
     function getEmp(empId) {
         $("#emp_name_p").empty();
         $.ajax({
@@ -455,7 +476,10 @@
             }
         });
     }
-
+    // 邮箱校验
+    $("#emp_email_input_update").change(function () {
+        validate_email(this);
+    });
     function validate_email(ele) {
         var email = $(ele).val();
         var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
@@ -469,10 +493,7 @@
             return true;
         }
     }
-
-    $("#emp_email_input_update").change(function () {
-        validate_email(this);
-    });
+    // 确认更新后进行再校验并更新员工数据
     $("#emp_update_btn").click(function () {
         if ($("#emp_email_input_update").val() == "") {
             return false;
@@ -483,18 +504,18 @@
         var empId = $(this).attr("empId");
         updateEmp(empId);
     });
-
+    <%--// 1. 更新单个员工数据--%>
     <%--function updateEmp(empId) {--%>
-    <%--$.ajax({--%>
-    <%--url: "${APP_PATH}/emp/" + empId,--%>
-    <%--type: "POST",--%>
-    <%--data: $("#empUpdateModal form").serialize()+"&_method=PUT",--%>
-    <%--success:function (result) {--%>
-    <%--console.log(result.extend.success);--%>
+        <%--$.ajax({--%>
+            <%--url: "${APP_PATH}/emp/" + empId,--%>
+            <%--type: "POST",--%>
+            <%--data: $("#empUpdateModal form").serialize() + "&_method=PUT",--%>
+            <%--success: function (result) {--%>
+                <%--console.log(result.extend.success);--%>
+            <%--}--%>
+        <%--});--%>
     <%--}--%>
-    <%--});--%>
-    <%--}--%>
-
+    // 2. 更新单个员工数据
     function updateEmp(empId) {
         $.ajax({
             url: "${APP_PATH}/emp/" + empId,
@@ -506,7 +527,7 @@
             }
         });
     }
-
+    // 删除员工信息
     $(document).on("click", ".del_btn", function () {
         var empId = $(this).attr("empId");
         var empName = $(this).parents("tr").find("td:eq(2)").text();
@@ -525,6 +546,7 @@
             });
         }
     });
+    // 多选删除
     $(".check_all").click(function () {
         $(".check_item").prop("checked", $(this).prop("checked"));
     });
@@ -546,7 +568,7 @@
             $.ajax({
                 url: "${APP_PATH}/emp/" + empIds,
                 type: "DELETE",
-                success: function (result) {
+                success: function (result) {0
                     if(result.code==200) {
                         alert("Delete failed");
                     }else if(result.code ==100) {
