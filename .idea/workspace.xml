@@ -8,13 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6a558ded-cf4b-4e0d-8652-e86979ad6c54" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/md/1. SSM_CRUD基本环境搭建.md" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/md/3. SSM_CRUD初步实现与测试.md" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/md/4. 前端页面设计.md" afterPath="$PROJECT_DIR$/md/4. 前端页面设计.md" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/service/DepartmentService.java" afterPath="$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/service/DepartmentService.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/service/EmployeeService.java" afterPath="$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/service/EmployeeService.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/service/impl/IDepartmentService.java" afterPath="$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/service/impl/IDepartmentService.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/service/impl/IEmployeeService.java" afterPath="$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/service/impl/IEmployeeService.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -65,8 +58,8 @@
       <file leaf-file-name="DepartmentController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/controller/DepartmentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+            <state relative-caret-position="689">
+              <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -618,14 +611,7 @@
       <workItem from="1549538588046" duration="4944000" />
       <workItem from="1549626730033" duration="2708000" />
       <workItem from="1549630859625" duration="1177000" />
-      <workItem from="1549632236757" duration="5000" />
-    </task>
-    <task id="LOCAL-00011" summary="SSM的User">
-      <created>1546265204065</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1546265204065</updated>
+      <workItem from="1549632236757" duration="158000" />
     </task>
     <task id="LOCAL-00012" summary="dataSources">
       <created>1547032808832</created>
@@ -963,7 +949,14 @@
       <option name="project" value="LOCAL" />
       <updated>1549543733800</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="1. 为后端逻辑Controller层和Service层添加注释信息&#10;2. 新增注释文档">
+      <created>1549632302082</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1549632302082</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -999,11 +992,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168180000" />
+    <option name="totallyTimeSpent" value="168333000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1098" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35523385" sideWeight="0.50536484" order="7" side_tool="true" content_ui="tabs" />
@@ -1023,6 +1015,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850778" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35022524" sideWeight="0.4946352" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -1038,7 +1031,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.49624464" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882884" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1123,7 +1115,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="SHOW_DIRTY_RECURSIVELY" value="true" />
-    <MESSAGE value="MapperTest测试成功，ContextConfiguration只要配置spring-mybatis即可，否则出错" />
     <MESSAGE value="sqlSession批量操作配置" />
     <MESSAGE value="EmployeeControllerTest测试" />
     <MESSAGE value="list.jsp测试" />
@@ -1148,7 +1139,8 @@
     <MESSAGE value="项目改名成功" />
     <MESSAGE value="index.jsp整理优化" />
     <MESSAGE value="为前端页面index.jsp添加注释信息" />
-    <option name="LAST_COMMIT_MESSAGE" value="为前端页面index.jsp添加注释信息" />
+    <MESSAGE value="1. 为后端逻辑Controller层和Service层添加注释信息&#10;2. 新增注释文档" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. 为后端逻辑Controller层和Service层添加注释信息&#10;2. 新增注释文档" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1468,8 +1460,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/xyz/funnyboy/crud/controller/DepartmentController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state relative-caret-position="689">
+          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
