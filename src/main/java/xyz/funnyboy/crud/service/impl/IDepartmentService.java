@@ -19,7 +19,7 @@ import java.util.List;
 public class IDepartmentService implements DepartmentService {
     @Autowired
     private DepartmentMapper departmentMapper;
-
+    // 获取部门名称
     public List<Department> getDeptName() {
         List<Department> list = departmentMapper.selectByExample(null);
         return list;

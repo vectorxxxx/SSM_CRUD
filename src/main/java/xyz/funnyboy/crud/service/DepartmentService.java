@@ -12,5 +12,6 @@ import java.util.List;
  * @since Java10
  */
 public interface DepartmentService {
+    // 获取部门名称
     List<Department> getDeptName();
 }

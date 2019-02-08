@@ -14,17 +14,18 @@ import java.util.List;
  * @since Java10
  */
 public interface EmployeeService {
+    // 查询所有员工
     List getAll();
-
+    // 新增员工信息
     int insertEmp(Employee employee);
-
+    // 校验员工可用性
     boolean validateUserUsable(String empName);
-
+    // 查询单个员工
     Employee getEmp(Integer id);
-
+    // 更新员工信息
     int updateEmp(@Valid Employee employee);
-
+    // 删除单个员工
     int delEmpById(Integer empId);
-
+    // 批量删除员工
     int delEmps(String empIds);
 }
